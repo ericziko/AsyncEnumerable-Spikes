@@ -22,6 +22,7 @@ public class CustomerSerializationTests {
     [Test]
     public void What_directory_am_I_in() {
         Console.WriteLine(Environment.CurrentDirectory);
+        Console.WriteLine(CurrentFile.Directory());
     }
     
 }

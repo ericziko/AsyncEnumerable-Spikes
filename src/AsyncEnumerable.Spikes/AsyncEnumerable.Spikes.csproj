@@ -23,4 +23,14 @@
         <Using Include="NUnit.Framework"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="SerializationDeserialization\TestData\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="SerializationDeserialization\CustomerSerializationTests.Should_be_able_to_serialize_10_customers.verified.txt">
+        <ParentFile>CustomerSerializationTests</ParentFile>
+      </None>
+    </ItemGroup>
+
 </Project>
