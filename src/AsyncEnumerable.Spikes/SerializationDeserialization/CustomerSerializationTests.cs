@@ -9,19 +9,6 @@ public class CustomerSerializationTests {
     private const int OneHundredMillion = 100_000_000;
     private const int TenMillion = 10_000_000;
     
-    [Test, Explicit]
-    public Task Should_be_able_to_serialize_10_customers() {
-        var maxCount = Ten;
-        var customers = Enumerable.Range(1, maxCount)
-            .Select(i => new Customer($"First {i}", $"Last {i}")).ToList();
-        var json = JsonSerializer.Serialize(customers, options: new JsonSerializerOptions {
-            WriteIndented = true
-        });
-        var filePath = GetFilePath(maxCount);
-        File.WriteAllText(filePath, json);
-        var result = File.ReadAllText(filePath);
-        return Verify(result);
-    }
 
 
     [TestCase(One)] // Creates a file that is 74 bytes in milliseconds
@@ -45,7 +32,8 @@ public class CustomerSerializationTests {
     [TestCase(Ten)] // Deserializes in 8ms on Mac mini
     [TestCase(TenMillion)] // Deserializes in 8 seconds on Mac mini 
     [TestCase(OneHundredMillion)] // Deserializes in 8 seconds on Mac mini 
-    public async Task Deserialization_Memory_Spike(int maxCount) {
+    [Explicit]
+    public async Task Deserialization_with_DeserializeAsync_Spike(int maxCount) {
         var filePath = GetFilePath(maxCount);
         await using var fileStream = File.OpenRead(filePath);
         var customers = await JsonSerializer
@@ -60,7 +48,9 @@ public class CustomerSerializationTests {
     [TestCase(Ten)] // Deserializes in 8ms on Mac mini
     [TestCase(TenMillion)] // Deserializes in 8 seconds on Mac mini 
     [TestCase(OneHundredMillion)] // Deserializes in 32 seconds on Mac mini
-    public async Task Deserialization_Memory_Spike_V2(int maxCount) {
+    [Explicit]
+    public async Task Deserialization_with_DeserializeAsyncEnumerable_Spike(int maxCount) {
+        Console.WriteLine($"{nameof(Deserialization_with_DeserializeAsyncEnumerable_Spike)}");
         var filePath = GetFilePath(maxCount);
         await using var fileStream = File.OpenRead(filePath);
         var customers = JsonSerializer
@@ -74,16 +64,16 @@ public class CustomerSerializationTests {
 
     // ReSharper disable once UnusedMember.Global
     public static void DeserializeEnumerable() {
-        var task = new CustomerSerializationTests().Deserialization_Memory_Spike(OneHundredMillion);
+        Console.WriteLine($"{nameof(DeserializeEnumerable)}");
+        var task = new CustomerSerializationTests().Deserialization_with_DeserializeAsync_Spike(OneHundredMillion);
         Task.WaitAll(task);
     }
     
     // ReSharper disable once UnusedMember.Global
-    public static void Deserialize_Async_Enumerable() {
-        var task = new CustomerSerializationTests().Deserialization_Memory_Spike_V2(OneHundredMillion);
+    public static void Deserialize_AsyncEnumerable() {
+        var task = new CustomerSerializationTests().Deserialization_with_DeserializeAsyncEnumerable_Spike(OneHundredMillion);
         Task.WaitAll(task);
     }
-
     private static string GetFilePath(int maxCount) {
         var fileName = $"{maxCount}_customers.json";
         var filePath = CurrentFile.Relative(Path.Combine("TestData", fileName));
