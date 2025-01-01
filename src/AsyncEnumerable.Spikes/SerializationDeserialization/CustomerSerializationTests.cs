@@ -92,13 +92,13 @@ public class CustomerSerializationTests {
         Console.WriteLine($"DeserializeAsyncEnumerable Customers Count: {count:N0}");
     }
 
-    [UsedImplicitly]
+    // ReSharper disable once UnusedMember.Global
     public static void DeserializeEnumerable() {
         var task = new CustomerSerializationTests().Deserialization_Memory_Spike(10_000_000);
         Task.WaitAll(task);
     }
     
-    [UsedImplicitly]
+    // ReSharper disable once UnusedMember.Global
     public static void Deserialize_Async_Enumerable() {
         var task = new CustomerSerializationTests().Deserialization_Memory_Spike_V2(10_000_000);
         Task.WaitAll(task);
