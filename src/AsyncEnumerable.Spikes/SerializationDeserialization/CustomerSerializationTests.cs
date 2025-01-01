@@ -1,4 +1,5 @@
 using System.Text.Json;
+using JetBrains.Annotations;
 
 namespace AsyncEnumerable.Spikes.SerializationDeserialization;
 
@@ -91,17 +92,13 @@ public class CustomerSerializationTests {
         Console.WriteLine($"DeserializeAsyncEnumerable Customers Count: {count:N0}");
     }
 
-    public static void Foo() {
-        Console.Write("Foo");
-    }
-
-    // ReSharper disable once UnusedMember.Global
+    [UsedImplicitly]
     public static void DeserializeEnumerable() {
         var task = new CustomerSerializationTests().Deserialization_Memory_Spike(10_000_000);
         Task.WaitAll(task);
     }
     
-    // ReSharper disable once UnusedMember.Global
+    [UsedImplicitly]
     public static void Deserialize_Async_Enumerable() {
         var task = new CustomerSerializationTests().Deserialization_Memory_Spike_V2(10_000_000);
         Task.WaitAll(task);
