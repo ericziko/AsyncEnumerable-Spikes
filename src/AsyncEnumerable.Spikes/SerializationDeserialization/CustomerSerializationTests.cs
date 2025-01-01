@@ -74,7 +74,7 @@ public class CustomerSerializationTests {
         await using var fileStream = File.OpenRead(filePath);
         var customers = await JsonSerializer
             .DeserializeAsync(fileStream, CustomerListJsonContext.Default.IEnumerableCustomer);
-        Console.WriteLine($"Customers Count: {customers!.ToList().Count:N0}");
+        Console.WriteLine($"Deserialize Customers Count: {customers!.ToList().Count:N0}");
     }
 
     [TestCase(10)] // Deserializes in 8ms on Mac mini
@@ -88,7 +88,7 @@ public class CustomerSerializationTests {
         await foreach (var unused in customers) {
             count++;
         }
-        Console.WriteLine($"Customers Count: {count:N0}");
+        Console.WriteLine($"DeserializeAsyncEnumerable Customers Count: {count:N0}");
     }
 
     public static void Foo() {
