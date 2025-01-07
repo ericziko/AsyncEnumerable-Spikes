@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>Benchmarks.DeserializeAsyncVsDeserializeAsyncEnumerable-20250106-225215</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: right; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet v0.14.0, macOS Sequoia 15.1.1 (24B91) [Darwin 24.1.0]
+Apple M2 Pro, 1 CPU, 10 logical and 10 physical cores
+.NET SDK 8.0.303
+  [Host]     : .NET 8.0.7 (8.0.724.31311), Arm64 RyuJIT AdvSIMD
+  DefaultJob : .NET 8.0.7 (8.0.724.31311), Arm64 RyuJIT AdvSIMD
+</code></pre>
+<pre><code></code></pre>
+
+<table>
+<thead><tr><th>Method              </th><th>Counts</th><th>Mean       </th><th>Error     </th><th>StdDev     </th><th>Ratio</th><th>RatioSD</th><th>Gen0  </th><th>Gen1 </th><th>Gen2</th><th>Allocated</th><th>Alloc Ratio</th>
+</tr>
+</thead><tbody><tr><td>DeserializeAsync</td><td>1</td><td>15.15 &mu;s</td><td>0.390 &mu;s</td><td>1.132 &mu;s</td><td>1.01</td><td>0.11</td><td>0.3052</td><td>-</td><td>-</td><td>2.59 KB</td><td>1.00</td>
+</tr><tr><td>DeserializeAsyncEnumerable</td><td>1</td><td>16.48 &mu;s</td><td>0.327 &mu;s</td><td>0.469 &mu;s</td><td>1.09</td><td>0.09</td><td>0.3357</td><td>-</td><td>-</td><td>2.9 KB</td><td>1.12</td>
+</tr><tr><td>DeserializeAsync</td><td>10</td><td>19.41 &mu;s</td><td>0.477 &mu;s</td><td>1.406 &mu;s</td><td>1.01</td><td>0.11</td><td>0.4883</td><td>-</td><td>-</td><td>4.4 KB</td><td>1.00</td>
+</tr><tr><td>DeserializeAsyncEnumerable</td><td>10</td><td>23.23 &mu;s</td><td>0.453 &mu;s</td><td>0.424 &mu;s</td><td>1.20</td><td>0.09</td><td>0.5493</td><td>-</td><td>-</td><td>4.71 KB</td><td>1.07</td>
+</tr><tr><td>DeserializeAsync</td><td>1000</td><td>302.25 &mu;s</td><td>2.831 &mu;s</td><td>2.648 &mu;s</td><td>1.00</td><td>0.01</td><td>23.4375</td><td>4.8828</td><td>2.9297</td><td>191.41 KB</td><td>1.00</td>
+</tr><tr><td>DeserializeAsyncEnumerable</td><td>1000</td><td>317.23 &mu;s</td><td>1.016 &mu;s</td><td>0.901 &mu;s</td><td>1.05</td><td>0.01</td><td>22.4609</td><td>0.9766</td><td>-</td><td>183.34 KB</td><td>0.96</td>
+</tr><tr><td>DeserializeAsync</td><td>10000000</td><td>7,072,274.81 &mu;s</td><td>139,340.231 &mu;s</td><td>221,008.391 &mu;s</td><td>1.00</td><td>0.04</td><td>253000.0000</td><td>102000.0000</td><td>24000.0000</td><td>2143522.67 KB</td><td>1.00</td>
+</tr><tr><td>DeserializeAsyncEnumerable</td><td>10000000</td><td>2,967,066.78 &mu;s</td><td>6,637.588 &mu;s</td><td>6,208.804 &mu;s</td><td>0.42</td><td>0.01</td><td>230000.0000</td><td>1000.0000</td><td>-</td><td>1881178.04 KB</td><td>0.88</td>
+</tr><tr><td>DeserializeAsync</td><td>100000000</td><td>193,959,117.41 &mu;s</td><td>9,456,350.265 &mu;s</td><td>27,882,264.137 &mu;s</td><td>1.02</td><td>0.21</td><td>2420000.0000</td><td>865000.0000</td><td>31000.0000</td><td>21615235.08 KB</td><td>1.00</td>
+</tr><tr><td>DeserializeAsyncEnumerable</td><td>100000000</td><td>30,105,633.10 &mu;s</td><td>63,269.189 &mu;s</td><td>52,832.639 &mu;s</td><td>0.16</td><td>0.02</td><td>2392000.0000</td><td>183000.0000</td><td>1000.0000</td><td>19517837.21 KB</td><td>0.90</td>
+</tr></tbody></table>
+</body>
+</html>
